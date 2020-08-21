@@ -9,7 +9,7 @@ import {
   Divider,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { Add } from "@material-ui/icons";
+import { AddRounded } from "@material-ui/icons";
 
 // styling object of the component
 const useStyles = makeStyles((theme) => ({
@@ -38,7 +38,7 @@ export default function Layers() {
                 <ListItem button>
                   <ListItemText>{text}</ListItemText>
                   <ListItemIcon>
-                    <Add />
+                    <AddRounded />
                   </ListItemIcon>
                 </ListItem>
                 <Divider variant="middle" />
