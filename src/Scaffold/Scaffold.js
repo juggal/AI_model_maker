@@ -22,9 +22,12 @@ import {
 } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
+import Layers from "../Components/Layers";
 
+// width of drawer component
 const drawerWidth = 160;
 
+// styling object for the component
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -159,6 +162,7 @@ export default function Scaffold() {
       <main className={classes.content}>
         <div className={classes.toolbar} />
         {/* hero goes content to be rendered */}
+        <Layers />
       </main>
     </div>
   );
