@@ -1,14 +1,15 @@
 import React from "react";
 import {
   Paper,
-  Typography,
-  List,
   ListItem,
   ListItemText,
+  ListItemIcon,
+  ListItemSecondaryAction,
   IconButton,
 } from "@material-ui/core";
 import { DeleteRounded, DragHandleRounded } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
+import BaseMenu from "./BaseMenu";
 
 // styling object for the component
 const useStyles = makeStyles((theme) => ({
@@ -19,47 +20,43 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(2, 2),
   },
   listItem: {
-    padding: theme.spacing(0.5, 1),
+    padding: theme.spacing(0.5, 8, 0.5, 2),
   },
 }));
 
 export default function Architecture() {
   const classes = useStyles();
   return (
-    <div>
-      <Paper>
-        <Typography
-          variant="h6"
-          noWrap
-          align="center"
-          className={classes.heading}
-        >
-          Architecture
-        </Typography>
-        <List>
-          {[
-            "Convolutional",
-            "MaxPooling",
-            "Flatten",
-            "Dense",
-            "Dense",
-            "Dropout",
-            "Dense",
-          ].map((text, index) => (
-            <Paper elevation={2} className={classes.itemSpacing}>
-              <ListItem className={classes.listItem}>
-                <IconButton>
-                  <DragHandleRounded />
-                </IconButton>
-                <ListItemText>{`Layer ${index + 1}: ${text}`}</ListItemText>
-                <IconButton>
-                  <DeleteRounded />
-                </IconButton>
-              </ListItem>
-            </Paper>
-          ))}
-        </List>
-      </Paper>
-    </div>
+    <BaseMenu heading="Architecture">
+      {[
+        "Convolutional",
+        "MaxPooling",
+        "Flatten",
+        "Dense",
+        "Dense",
+        "Dropout",
+        "Dense",
+      ].map((text, index) => (
+        <Paper elevation={2} className={classes.itemSpacing}>
+          <ListItem className={classes.listItem}>
+            <ListItemIcon>
+              <IconButton edge="start" aria-label="drag layer">
+                <DragHandleRounded />
+              </IconButton>
+            </ListItemIcon>
+            <ListItemText>{`Layer ${index + 1}: ${text}`}</ListItemText>
+            <ListItemSecondaryAction>
+              <IconButton
+                color="secondary"
+                edge="end"
+                aria-label="delete layer"
+              >
+                <DeleteRounded />
+              </IconButton>
+            </ListItemSecondaryAction>
+          </ListItem>
+        </Paper>
+      ))}
+    </BaseMenu>
   );
 }
