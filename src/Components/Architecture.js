@@ -13,10 +13,7 @@ import BaseMenu from "./BaseMenu";
 
 // styling object for the component
 const useStyles = makeStyles((theme) => ({
-  heading: {
-    padding: theme.spacing(1),
-  },
-  itemSpacing: {
+  layerSpacing: {
     margin: theme.spacing(2, 2),
   },
   listItem: {
@@ -27,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Architecture() {
   const classes = useStyles();
   return (
-    <BaseMenu heading="Architecture">
+    <BaseMenu heading="Architecture" list>
       {[
         "Convolutional",
         "MaxPooling",
@@ -37,7 +34,7 @@ export default function Architecture() {
         "Dropout",
         "Dense",
       ].map((text, index) => (
-        <Paper elevation={2} className={classes.itemSpacing}>
+        <Paper elevation={2} className={classes.layerSpacing}>
           <ListItem className={classes.listItem}>
             <ListItemIcon>
               <IconButton edge="start" aria-label="drag layer">

@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { Paper, Typography, List } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 // add style object to component
 const useStyles = makeStyles((theme) => ({
-  heading: {
+  root: {
     padding: theme.spacing(1),
   },
 }));
@@ -12,16 +12,11 @@ const useStyles = makeStyles((theme) => ({
 export default function BaseMenu(props) {
   const classes = useStyles();
   return (
-    <Paper>
-      <Typography
-        variant="h6"
-        noWrap
-        align="center"
-        className={classes.heading}
-      >
+    <Paper className={classes.root}>
+      <Typography variant="h6" noWrap align="center">
         {props.heading}
       </Typography>
-      <List>{props.children}</List>
+      {props.list ? <List>{props.children}</List> : props.children}
     </Paper>
   );
 }
