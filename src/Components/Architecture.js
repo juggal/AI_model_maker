@@ -7,7 +7,11 @@ import {
   ListItemSecondaryAction,
   IconButton,
 } from "@material-ui/core";
-import { DeleteRounded, DragHandleRounded } from "@material-ui/icons";
+import {
+  DeleteRounded,
+  DragHandleRounded,
+  Autorenew,
+} from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
 import BaseMenu from "./BaseMenu";
 
@@ -15,6 +19,11 @@ import BaseMenu from "./BaseMenu";
 const useStyles = makeStyles((theme) => ({
   layerSpacing: {
     margin: theme.spacing(2, 2),
+  },
+  list: {
+    paddingTop: theme.spacing(1),
+    maxHeight: 530,
+    overflow: "auto",
   },
   listItem: {
     padding: theme.spacing(0.5, 8, 0.5, 2),
@@ -24,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Architecture() {
   const classes = useStyles();
   return (
-    <BaseMenu heading="Architecture" list>
+    <BaseMenu heading="Architecture" list listStyle={classes.list}>
       {[
         "Convolutional",
         "MaxPooling",
