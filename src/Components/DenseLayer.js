@@ -5,9 +5,11 @@ import {
   TextField,
   MenuItem,
   Typography,
+  Grid,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
+// add style object to the component
 const useStyles = makeStyles((theme) => ({
   root: {
     "& .MuiTextField-root": {
@@ -15,6 +17,9 @@ const useStyles = makeStyles((theme) => ({
       width: "25ch",
     },
     padding: theme.spacing(1, 1.5),
+  },
+  sliderInput: {
+    width: 42,
   },
 }));
 
@@ -65,26 +70,33 @@ export default function DenseLayer() {
     <form className={classes.root}>
       <div>
         <Typography gutterBottom>Units</Typography>
-        <Slider
-          value={typeof unit === "number" ? unit : 0}
-          step={1}
-          min={0}
-          max={2000}
-          valueLabelDisplay="auto"
-          onChange={handleUnitChange}
-        />
-        <Input
-          value={unit}
-          margin="dense"
-          onChange={handleInputChange}
-          onBlur={handleBlur}
-          inputProps={{
-            step: 1,
-            min: 0,
-            max: 2000,
-            type: "number",
-          }}
-        />
+        <Grid container spacing={2} alignItems="center">
+          <Grid item xs>
+            <Slider
+              value={typeof unit === "number" ? unit : 0}
+              step={1}
+              min={0}
+              max={2000}
+              valueLabelDisplay="auto"
+              onChange={handleUnitChange}
+            />
+          </Grid>
+          <Grid item>
+            <Input
+              value={unit}
+              margin="dense"
+              onChange={handleInputChange}
+              onBlur={handleBlur}
+              inputProps={{
+                step: 1,
+                min: 0,
+                max: 2000,
+                type: "number",
+              }}
+              className={classes.sliderInput}
+            />
+          </Grid>
+        </Grid>
       </div>
       <div>
         <TextField
@@ -93,6 +105,7 @@ export default function DenseLayer() {
           label="Activation"
           value={activation}
           onChange={handleActivationChange}
+          required
         >
           {activations.map((option) => (
             <MenuItem key={option.value} value={option.value}>
@@ -102,7 +115,7 @@ export default function DenseLayer() {
         </TextField>
       </div>
       <div>
-        <TextField variant="outlined" label="Input Shape" />
+        <TextField variant="outlined" label="Input Shape" required />
       </div>
     </form>
   );
