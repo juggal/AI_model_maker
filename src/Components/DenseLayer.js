@@ -8,6 +8,7 @@ import {
   Grid,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import SaveButton from "./SaveButton";
 
 // add style object to the component
 const useStyles = makeStyles((theme) => ({
@@ -119,6 +120,7 @@ export default function DenseLayer() {
       <div>
         <TextField variant="outlined" label="Input Shape" required />
       </div>
+      <SaveButton />
     </form>
   );
 }
