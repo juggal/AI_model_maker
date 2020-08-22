@@ -16,7 +16,11 @@ export default function BaseMenu(props) {
       <Typography variant="h6" noWrap align="center">
         {props.heading}
       </Typography>
-      {props.list ? <List>{props.children}</List> : props.children}
+      {props.list ? (
+        <List classes={{ root: props.listStyle }}>{props.children}</List>
+      ) : (
+        props.children
+      )}
     </Paper>
   );
 }
