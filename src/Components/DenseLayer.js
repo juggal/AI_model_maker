@@ -69,7 +69,9 @@ export default function DenseLayer() {
   return (
     <form className={classes.root}>
       <div>
-        <Typography gutterBottom>Units</Typography>
+        <Typography variant="caption" gutterBottom>
+          Units
+        </Typography>
         <Grid container spacing={2} alignItems="center">
           <Grid item xs>
             <Slider
