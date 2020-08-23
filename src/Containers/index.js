@@ -1,6 +1,6 @@
-import Layers from "./ModelContainers/Layers";
-import Architecture from "./ModelContainers/Architecture";
-import LayerTuning from "./ModelContainers/LayerTuning";
+import Layers from "./ModelContainer/Layers";
+import Architecture from "./ModelContainer/Architecture";
+import LayerTuning from "./ModelContainer/LayerTuning";
 
 export const ModelContainers = {
   Layers,

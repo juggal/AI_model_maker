@@ -1,10 +1,10 @@
 import React from "react";
 
 import BaseMenu from "../../Components/BaseMenu";
-import DenseLayer from "./LayerContainer/DenseLayer";
-import DropoutLayer from "./LayerContainer/DropoutLayer";
-import ConvolutionLayer from "./LayerContainer/CovolutionLayer";
-import MaxPoolLayer from "./LayerContainer/MaxPoolLayer";
+import DenseLayer from "./LayerSettings/DenseLayer";
+import DropoutLayer from "./LayerSettings/DropoutLayer";
+import ConvolutionLayer from "./LayerSettings/CovolutionLayer";
+import MaxPoolLayer from "./LayerSettings/MaxPoolLayer";
 
 export default function LayerTuning() {
   return (
