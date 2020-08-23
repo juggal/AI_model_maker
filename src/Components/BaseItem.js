@@ -11,7 +11,7 @@ import { DeleteRounded, DragHandleRounded } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
 
 import { connect } from "react-redux";
-import { removeLayer } from "../redux";
+import { removeLayer, setSelectedLayer } from "../redux";
 
 // styling object for the component
 const useStyles = makeStyles((theme) => ({
@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function BaseItem({ id, text, index, removeLayer }) {
+function BaseItem({ id, text, index, removeLayer, setSelectedLayer }) {
   const classes = useStyles();
   return (
     <Paper elevation={2} className={classes.layerSpacing}>
@@ -38,7 +38,9 @@ function BaseItem({ id, text, index, removeLayer }) {
             <DragHandleRounded />
           </IconButton>
         </ListItemIcon>
-        <ListItemText>{`Layer ${index + 1}: ${text}`}</ListItemText>
+        <ListItemText onClick={() => setSelectedLayer(id, text)}>{`Layer ${
+          index + 1
+        }: ${text}`}</ListItemText>
         <ListItemSecondaryAction>
           <IconButton
             color="secondary"
@@ -57,6 +59,8 @@ function BaseItem({ id, text, index, removeLayer }) {
 const mapDispatchToProps = (dispatch) => {
   return {
     removeLayer: (layer_id) => dispatch(removeLayer(layer_id)),
+    setSelectedLayer: (layer_id, layer_name) =>
+      dispatch(setSelectedLayer(layer_id, layer_name)),
   };
 };
 

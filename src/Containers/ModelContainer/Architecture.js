@@ -32,7 +32,7 @@ function Architecture({ layers }) {
 
 const mapStateToProps = (state) => {
   return {
-    layers: state.layers,
+    layers: state.architecture.layers,
   };
 };
 
