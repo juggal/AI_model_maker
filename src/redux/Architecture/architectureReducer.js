@@ -16,7 +16,7 @@ const architectureReducer = (state = itnitialState, action) => {
       return {
         ...state,
         layers: state.layers.filter(
-          (layer) => layer.layer_id !== action.payload
+          (layer) => layer.layer_id !== action.payload.layer_id
         ),
       };
     default:
