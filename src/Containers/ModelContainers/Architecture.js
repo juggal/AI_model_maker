@@ -13,7 +13,7 @@ import {
   Autorenew,
 } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
-import BaseMenu from "./BaseMenu";
+import BaseMenu from "../../Components/BaseMenu";
 
 // styling object for the component
 const useStyles = makeStyles((theme) => ({

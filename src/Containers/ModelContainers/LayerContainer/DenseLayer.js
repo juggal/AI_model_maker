@@ -1,9 +1,9 @@
 import React from "react";
-import BaseForm from "./BaseForm";
-import Size from "./Size";
-import Shape from "./Shape";
-import SaveButton from "./SaveButton";
-import DropDown from "./DropDown";
+import BaseForm from "../../../Components/BaseForm";
+import Size from "../../../Components/Size";
+import Shape from "../../../Components/Shape";
+import SaveButton from "../../../Components/SaveButton";
+import DropDown from "../../../Components/DropDown";
 
 export default function DenseLayer() {
   return (

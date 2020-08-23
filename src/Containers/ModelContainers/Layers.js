@@ -8,7 +8,7 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { AddRounded } from "@material-ui/icons";
-import BaseMenu from "./BaseMenu";
+import BaseMenu from "../../Components/BaseMenu";
 
 // add style object to component
 const useStyles = makeStyles((theme) => ({}));

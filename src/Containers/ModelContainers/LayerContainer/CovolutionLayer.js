@@ -1,9 +1,9 @@
 import React from "react";
-import BaseForm from "./BaseForm";
-import Size from "./Size";
-import Shape from "./Shape";
-import DropDown from "./DropDown";
-import SaveButton from "./SaveButton";
+import BaseForm from "../../../Components/BaseForm";
+import Size from "../../../Components/Size";
+import Shape from "../../../Components/Shape";
+import DropDown from "../../../Components/DropDown";
+import SaveButton from "../../../Components/SaveButton";
 
 export default function ConvolutionLayer() {
   return (

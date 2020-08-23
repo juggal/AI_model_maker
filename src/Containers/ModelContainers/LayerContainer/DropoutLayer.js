@@ -1,8 +1,8 @@
 import React from "react";
 
-import SaveButton from "./SaveButton";
-import Size from "./Size";
-import BaseForm from "./BaseForm";
+import SaveButton from "../../../Components/SaveButton";
+import Size from "../../../Components/Size";
+import BaseForm from "../../../Components/BaseForm";
 
 export default function DropoutLayer() {
   return (

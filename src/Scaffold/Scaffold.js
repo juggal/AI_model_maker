@@ -24,7 +24,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 
 // import views
-import LayerWorkSpace from "../Views/LayerWorkSpace";
+import Model from "../Views/Model";
 
 // width of drawer component
 const drawerWidth = 160;
@@ -164,7 +164,7 @@ export default function Scaffold() {
       <main className={classes.content}>
         <div className={classes.toolbar} />
         {/* hero goes content to be rendered */}
-        <LayerWorkSpace />
+        <Model />
       </main>
     </div>
   );
