@@ -18,13 +18,14 @@ const useStyles = makeStyles((theme) => ({
   layerSpacing: {
     margin: theme.spacing(2, 2),
   },
-  list: {
-    paddingTop: theme.spacing(1),
-    maxHeight: 530,
-    overflow: "auto",
-  },
   listItem: {
     padding: theme.spacing(0.5, 8, 0.5, 2),
+    marginRight: theme.spacing(2),
+  },
+  hover: {
+    "&:hover": {
+      cursor: "pointer",
+    },
   },
 }));
 
@@ -38,9 +39,10 @@ function BaseItem({ id, text, index, removeLayer, setSelectedLayer }) {
             <DragHandleRounded />
           </IconButton>
         </ListItemIcon>
-        <ListItemText onClick={() => setSelectedLayer(id, text)}>{`Layer ${
-          index + 1
-        }: ${text}`}</ListItemText>
+        <ListItemText
+          className={classes.hover}
+          onClick={() => setSelectedLayer(id, text)}
+        >{`Layer ${index + 1}: ${text}`}</ListItemText>
         <ListItemSecondaryAction>
           <IconButton
             color="secondary"
