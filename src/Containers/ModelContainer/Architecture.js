@@ -3,6 +3,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import BaseMenu from "../../Components/BaseMenu";
 import BaseItem from "../../Components/BaseItem";
 
+import { connect } from "react-redux";
+
 // styling object for the component
 const useStyles = makeStyles((theme) => ({
   list: {
@@ -12,21 +14,26 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Architecture() {
+function Architecture({ layers }) {
   const classes = useStyles();
   return (
     <BaseMenu heading="Architecture" list listStyle={classes.list}>
-      {[
-        "Convolutional",
-        "MaxPooling",
-        "Flatten",
-        "Dense",
-        "Dense",
-        "Dropout",
-        "Dense",
-      ].map((text, index) => (
-        <BaseItem text={text} index={index} />
+      {layers.map((layer, index) => (
+        <BaseItem
+          id={layer.layer_id}
+          text={layer.layer_type}
+          index={index}
+          key={layer.id}
+        />
       ))}
     </BaseMenu>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    layers: state.layers,
+  };
+};
+
+export default connect(mapStateToProps)(Architecture);

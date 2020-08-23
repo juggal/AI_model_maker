@@ -10,6 +10,9 @@ import {
 import { DeleteRounded, DragHandleRounded } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
 
+import { connect } from "react-redux";
+import { removeLayer } from "../redux";
+
 // styling object for the component
 const useStyles = makeStyles((theme) => ({
   layerSpacing: {
@@ -25,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function BaseItem({ text, index }) {
+function BaseItem({ id, text, index, removeLayer }) {
   const classes = useStyles();
   return (
     <Paper elevation={2} className={classes.layerSpacing}>
@@ -37,7 +40,12 @@ export default function BaseItem({ text, index }) {
         </ListItemIcon>
         <ListItemText>{`Layer ${index + 1}: ${text}`}</ListItemText>
         <ListItemSecondaryAction>
-          <IconButton color="secondary" edge="end" aria-label="delete layer">
+          <IconButton
+            color="secondary"
+            edge="end"
+            aria-label="delete layer"
+            onClick={() => removeLayer(id)}
+          >
             <DeleteRounded />
           </IconButton>
         </ListItemSecondaryAction>
@@ -45,3 +53,11 @@ export default function BaseItem({ text, index }) {
     </Paper>
   );
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    removeLayer: (layer_id) => dispatch(removeLayer(layer_id)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(BaseItem);
