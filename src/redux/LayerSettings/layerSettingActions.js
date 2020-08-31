@@ -9,3 +9,12 @@ export const setSelectedLayer = (layer_id, layer_name) => {
     },
   };
 };
+
+export const saveLayerSettings = (layer_id, settings) => {
+  return {
+    type: SAVE_LAYER_SETTINGS,
+    payload: {
+      ...settings,
+    },
+  };
+};

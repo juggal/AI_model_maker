@@ -1,2 +1,5 @@
 export { addLayer, removeLayer } from "./Architecture/architectureActions";
-export { setSelectedLayer } from "./LayerSettings/layerSettingActions";
+export {
+  setSelectedLayer,
+  saveLayerSettings,
+} from "./LayerSettings/layerSettingActions";
