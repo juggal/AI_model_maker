@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { connect } from "react-redux";
 
 import BaseMenu from "../../Components/BaseMenu";
 import DenseLayer from "./LayerSettings/DenseLayer";
 import DropoutLayer from "./LayerSettings/DropoutLayer";
 import ConvolutionLayer from "./LayerSettings/CovolutionLayer";
 import MaxPoolLayer from "./LayerSettings/MaxPoolLayer";
+
+import { saveLayerSettings } from "../../redux";
+import { connect } from "react-redux";
 
 // add style object to the component
 const useStyles = makeStyles((theme) => ({
@@ -27,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function LayerTuning({ selectedLayer }) {
+function LayerTuning({ selectedLayer, saveLayerSettings }) {
   const classes = useStyles();
 
   const [currentSetting, setSetting] = useState("");
@@ -35,6 +37,11 @@ function LayerTuning({ selectedLayer }) {
 
   const handleFieldValues = (value, type) => {
     setFieldValues((prevState) => ({ ...prevState, [type]: value }));
+  };
+
+  const save = () => {
+    // saveLayerSettings(selectedLayer.layer_id, fieldValues);
+    console.log(fieldValues);
   };
 
   useEffect(() => {
@@ -45,10 +52,10 @@ function LayerTuning({ selectedLayer }) {
   const settingType = (layerName) => {
     switch (layerName) {
       case "Dense":
-        return <DenseLayer onChange={handleFieldValues} />;
+        return <DenseLayer onChange={handleFieldValues} save={save} />;
 
       case "Dropout":
-        return <DropoutLayer onChange={handleFieldValues} />;
+        return <DropoutLayer onChange={handleFieldValues} save={save} />;
 
       case "Flatten":
         return (
@@ -58,10 +65,10 @@ function LayerTuning({ selectedLayer }) {
         );
 
       case "Convolution":
-        return <ConvolutionLayer onChange={handleFieldValues} />;
+        return <ConvolutionLayer onChange={handleFieldValues} save={save} />;
 
       case "MaxPool":
-        return <MaxPoolLayer onChange={handleFieldValues} />;
+        return <MaxPoolLayer onChange={handleFieldValues} save={save} />;
       default:
         return null;
     }
@@ -91,4 +98,11 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(LayerTuning);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    saveLayerSettings: (layer_id, settings) =>
+      dispatch(saveLayerSettings(layer_id, settings)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(LayerTuning);

@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function SaveButton({ layers, selectedLayerId }) {
+function SaveButton({ layers, selectedLayerId, save }) {
   const classes = useStyles();
 
   const [open, setOpen] = useState(false);
@@ -31,6 +31,7 @@ function SaveButton({ layers, selectedLayerId }) {
     if (index === -1) {
       setMessage("Save Failed");
     } else {
+      save();
       setMessage("Save successfully");
     }
     // open the snackbar

@@ -4,7 +4,7 @@ import Shape from "../../../Components/Shape";
 import SaveButton from "../../../Components/SaveButton";
 import DropDown from "../../../Components/DropDown";
 
-export default function DenseLayer({ onChange }) {
+export default function DenseLayer({ onChange, save }) {
   return (
     <div>
       <Size
@@ -17,7 +17,7 @@ export default function DenseLayer({ onChange }) {
       />
       <Shape label="Input Shape" type="input_shape" onChange={onChange} />
       <DropDown label="Activation" type="activation" onChange={onChange} />
-      <SaveButton />
+      <SaveButton save={save} />
     </div>
   );
 }

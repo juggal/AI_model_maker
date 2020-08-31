@@ -4,7 +4,7 @@ import Shape from "../../../Components/Shape";
 import DropDown from "../../../Components/DropDown";
 import SaveButton from "../../../Components/SaveButton";
 
-export default function ConvolutionLayer({ onChange }) {
+export default function ConvolutionLayer({ onChange, save }) {
   return (
     <div>
       <Size
@@ -20,7 +20,7 @@ export default function ConvolutionLayer({ onChange }) {
       <Shape label="Stride Size" type="stride_size" onChange={onChange} />
       <DropDown label="Padding" type="padding" onChange={onChange} />
       <DropDown label="Activation" type="activation" onChange={onChange} />
-      <SaveButton />
+      <SaveButton save={save} />
     </div>
   );
 }
