@@ -1,5 +1,4 @@
 import React from "react";
-import Size from "../../../Components/Size";
 import Shape from "../../../Components/Shape";
 import DropDown from "../../../Components/DropDown";
 import SaveButton from "../../../Components/SaveButton";
