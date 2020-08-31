@@ -13,12 +13,27 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SaveButton() {
+function SaveButton({ layers, selectedLayerId }) {
   const classes = useStyles();
 
   const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState("");
 
-  const handleClick = () => {
+  const handleClick = (layers, selectedLayerId) => {
+    // search for if current selected layer exists
+    // in layers array
+    const index = layers.findIndex((layer) => {
+      if (layer.layer_id === selectedLayerId) {
+        return true;
+      }
+    });
+    // set message based on if layer exists or not
+    if (index === -1) {
+      setMessage("Save Failed");
+    } else {
+      setMessage("Save successfully");
+    }
+    // open the snackbar
     setOpen(true);
   };
 
@@ -32,7 +47,7 @@ export default function SaveButton() {
         size="small"
         color="primary"
         variant="contained"
-        onClick={handleClick}
+        onClick={() => handleClick(layers, selectedLayerId)}
       >
         Save
       </Button>
@@ -40,9 +55,19 @@ export default function SaveButton() {
         anchorOrigin={{ vertical: "Top", horizontal: "Right" }}
         open={open}
         onClose={handleClose}
-        message="Saved Successfully"
+        message={message}
         key={{ vertical: "Top", horizontal: "Right" }}
+        autoHideDuration={3000}
       />
     </div>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    layers: state.architecture.layers,
+    selectedLayerId: state.layerSettings.selectedLayer.layer_id,
+  };
+};
+
+export default connect(mapStateToProps)(SaveButton);
