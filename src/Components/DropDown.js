@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { TextField, MenuItem } from "@material-ui/core";
 
 // list of activation functinons
@@ -33,7 +33,7 @@ const paddings = [
   },
 ];
 
-export default function DropDown(props) {
+export default function DropDown({ label, type, onChange }) {
   const [listSelect, setListSelect] = useState("");
 
   const handleListSelect = (event) => {
@@ -41,18 +41,23 @@ export default function DropDown(props) {
   };
 
   const list = () => {
-    if (props.type === "activation") {
+    if (type === "activation") {
       return activations;
-    } else if (props.type === "padding") {
+    } else if (type === "padding") {
       return paddings;
     }
   };
+
+  useEffect(() => {
+    onChange(listSelect, type);
+  }, [listSelect]);
+
   return (
     <div>
       <TextField
         select
         variant="outlined"
-        label={props.label}
+        label={label}
         value={listSelect}
         onChange={handleListSelect}
         required

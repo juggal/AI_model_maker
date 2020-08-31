@@ -29,13 +29,26 @@ const useStyles = makeStyles((theme) => ({
 
 function LayerTuning({ selectedLayer }) {
   const classes = useStyles();
+
+  const [currentSetting, setSetting] = useState("");
+  const [fieldValues, setFieldValues] = useState({});
+
+  const handleFieldValues = (value, type) => {
+    setFieldValues((prevState) => ({ ...prevState, [type]: value }));
+  };
+
+  useEffect(() => {
+    setFieldValues({});
+    setSetting(settingType(selectedLayer.layer_name));
+  }, [selectedLayer]);
+
   const settingType = (layerName) => {
     switch (layerName) {
       case "Dense":
-        return <DenseLayer />;
+        return <DenseLayer onChange={handleFieldValues} />;
 
       case "Dropout":
-        return <DropoutLayer />;
+        return <DropoutLayer onChange={handleFieldValues} />;
 
       case "Flatten":
         return (
@@ -45,19 +58,14 @@ function LayerTuning({ selectedLayer }) {
         );
 
       case "Convolution":
-        return <ConvolutionLayer />;
+        return <ConvolutionLayer onChange={handleFieldValues} />;
 
       case "MaxPool":
-        return <MaxPoolLayer />;
+        return <MaxPoolLayer onChange={handleFieldValues} />;
       default:
         return null;
     }
   };
-
-  const [currentSetting, setSetting] = useState("");
-  useEffect(() => {
-    setSetting(settingType(selectedLayer.layer_name));
-  }, [selectedLayer]);
 
   return (
     <BaseMenu heading="Layer Tuning">

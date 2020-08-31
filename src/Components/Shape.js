@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import { TextField } from "@material-ui/core";
 
-export default function Shape(props) {
-  const [shape, setShape] = useState("");
+export default function Shape({ label, type, onChange }) {
   return (
     <div>
       <TextField
         variant="outlined"
-        label={props.label}
-        onChange={(e) => setShape(e.target.value)}
+        label={label}
+        onChange={(e) => onChange(e.target.value, type)}
         required
       />
     </div>

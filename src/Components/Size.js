@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Typography, Grid, Slider, Input } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -9,9 +9,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Size(props) {
+export default function Size({ label, min, max, steps, type, onChange }) {
   const classes = useStyles();
-  const [size, setSize] = useState(props.min);
+  const [size, setSize] = useState(min);
   const handleSizeChange = (event, newValue) => {
     setSize(newValue);
   };
@@ -21,25 +21,28 @@ export default function Size(props) {
   };
 
   const handleBlur = () => {
-    if (size < props.min) {
-      setSize(props.min);
-    } else if (size > props.max) {
-      setSize(props.max);
+    if (size < min) {
+      setSize(min);
+    } else if (size > max) {
+      setSize(max);
     }
   };
 
+  useEffect(() => {
+    onChange(size, type);
+  }, [size]);
   return (
     <div>
       <Typography variant="caption" gutterBottom>
-        {props.label}
+        {label}
       </Typography>
       <Grid container spacing={2} alignItems="center">
         <Grid item xs>
           <Slider
             value={typeof size === "number" ? size : 0}
-            step={props.steps}
-            min={props.min}
-            max={props.max}
+            step={steps}
+            min={min}
+            max={max}
             valueLabelDisplay="auto"
             onChange={handleSizeChange}
           />
@@ -51,9 +54,9 @@ export default function Size(props) {
             onChange={handleInputChange}
             onBlur={handleBlur}
             inputProps={{
-              step: props.steps,
-              min: props.min,
-              max: props.max,
+              step: steps,
+              min: min,
+              max: max,
               type: "number",
             }}
             className={classes.sliderInput}
