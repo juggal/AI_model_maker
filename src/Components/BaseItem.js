@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function BaseItem({ id, text, index, removeLayer, setSelectedLayer }) {
+function BaseItem({ id, text, isFirst, index, removeLayer, setSelectedLayer }) {
   const classes = useStyles();
   return (
     <Paper elevation={2} className={classes.layerSpacing}>
@@ -41,7 +41,7 @@ function BaseItem({ id, text, index, removeLayer, setSelectedLayer }) {
         </ListItemIcon>
         <ListItemText
           className={classes.hover}
-          onClick={() => setSelectedLayer(id, text)}
+          onClick={() => setSelectedLayer(id, text, isFirst)}
         >{`Layer ${index + 1}: ${text}`}</ListItemText>
         <ListItemSecondaryAction>
           <IconButton
@@ -61,8 +61,8 @@ function BaseItem({ id, text, index, removeLayer, setSelectedLayer }) {
 const mapDispatchToProps = (dispatch) => {
   return {
     removeLayer: (layer_id) => dispatch(removeLayer(layer_id)),
-    setSelectedLayer: (layer_id, layer_name) =>
-      dispatch(setSelectedLayer(layer_id, layer_name)),
+    setSelectedLayer: (layer_id, layer_name, isFirst) =>
+      dispatch(setSelectedLayer(layer_id, layer_name, isFirst)),
   };
 };
 

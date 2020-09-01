@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   ListItem,
   ListItemText,
@@ -17,6 +17,7 @@ import { connect } from "react-redux";
 import uniqid from "uniqid";
 
 function Layers({ addLayer }) {
+  const [isFirst, setFirst] = useState(true);
   return (
     <BaseMenu heading="Layers" list>
       {["Dense", "Dropout", "Flatten", "Convolution", "MaxPool"].map(
@@ -29,7 +30,10 @@ function Layers({ addLayer }) {
                   color="primary"
                   edge="end"
                   aria-label="add layer"
-                  onClick={() => addLayer(uniqid("layer_"), text)}
+                  onClick={() => {
+                    addLayer(uniqid("layer_"), text, isFirst);
+                    setFirst(false);
+                  }}
                 >
                   <AddRounded />
                 </IconButton>
@@ -45,8 +49,8 @@ function Layers({ addLayer }) {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addLayer: (layer_id, layer_type) =>
-      dispatch(addLayer(layer_id, layer_type)),
+    addLayer: (layer_id, layer_type, isFirst) =>
+      dispatch(addLayer(layer_id, layer_type, isFirst)),
   };
 };
 

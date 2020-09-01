@@ -22,8 +22,9 @@ function Architecture({ layers }) {
         <BaseItem
           id={layer.layer_id}
           text={layer.layer_type}
+          isFirst={layer.first_layer}
           index={index}
-          key={layer.id}
+          key={layer.layer_id}
         />
       ))}
     </BaseMenu>
