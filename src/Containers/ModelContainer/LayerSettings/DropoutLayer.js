@@ -3,7 +3,7 @@ import React from "react";
 import SaveButton from "../../../Components/SaveButton";
 import Size from "../../../Components/Size";
 
-export default function DropoutLayer({ onChange, save }) {
+export default function DropoutLayer({ onChange, save, settings }) {
   return (
     <div>
       <Size
@@ -13,6 +13,7 @@ export default function DropoutLayer({ onChange, save }) {
         steps={0.1}
         type="rate"
         onChange={onChange}
+        settings={settings.rate}
       />
       <SaveButton save={save} />
     </div>

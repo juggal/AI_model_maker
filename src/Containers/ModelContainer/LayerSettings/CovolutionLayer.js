@@ -4,7 +4,7 @@ import Shape from "../../../Components/Shape";
 import DropDown from "../../../Components/DropDown";
 import SaveButton from "../../../Components/SaveButton";
 
-export default function ConvolutionLayer({ onChange, save }) {
+export default function ConvolutionLayer({ onChange, save, settings }) {
   return (
     <div>
       <Size
@@ -14,12 +14,38 @@ export default function ConvolutionLayer({ onChange, save }) {
         steps={1}
         type="filters"
         onChange={onChange}
+        settings={settings.filters}
       />
-      <Shape label="Input Shape" type="input_shape" onChange={onChange} />
-      <Shape label="Kernal Size" type="kernal_size" onChange={onChange} />
-      <Shape label="Stride Size" type="stride_size" onChange={onChange} />
-      <DropDown label="Padding" type="padding" onChange={onChange} />
-      <DropDown label="Activation" type="activation" onChange={onChange} />
+      <Shape
+        label="Input Shape"
+        type="input_shape"
+        onChange={onChange}
+        settings={settings.input_shape}
+      />
+      <Shape
+        label="Kernal Size"
+        type="kernal_size"
+        onChange={onChange}
+        settings={settings.kernal_size}
+      />
+      <Shape
+        label="Stride Size"
+        type="stride_size"
+        onChange={onChange}
+        settings={settings.stride_size}
+      />
+      <DropDown
+        label="Padding"
+        type="padding"
+        onChange={onChange}
+        settings={settings.padding}
+      />
+      <DropDown
+        label="Activation"
+        type="activation"
+        onChange={onChange}
+        settings={settings.activation}
+      />
       <SaveButton save={save} />
     </div>
   );

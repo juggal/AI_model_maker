@@ -9,9 +9,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Size({ label, min, max, steps, type, onChange }) {
+export default function Size({
+  label,
+  min,
+  max,
+  steps,
+  type,
+  onChange,
+  settings,
+}) {
   const classes = useStyles();
-  const [size, setSize] = useState(min);
+  const [size, setSize] = useState(settings || min);
   const [loaded, setLoaded] = useState(false);
   const handleSizeChange = (event, newValue) => {
     setSize(newValue);

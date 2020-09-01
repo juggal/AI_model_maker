@@ -33,8 +33,8 @@ const paddings = [
   },
 ];
 
-export default function DropDown({ label, type, onChange }) {
-  const [listSelect, setListSelect] = useState("");
+export default function DropDown({ label, type, onChange, settings }) {
+  const [listSelect, setListSelect] = useState(settings || "");
   const [loaded, setLoaded] = useState(false);
 
   const handleListSelect = (event) => {

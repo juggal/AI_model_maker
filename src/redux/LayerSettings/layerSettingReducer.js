@@ -1,7 +1,7 @@
 import { SELECTED_LAYER, SAVE_LAYER_SETTINGS } from "./layerSettingTypes";
 
 const initialState = {
-  layerSettings: [],
+  settings: [],
   selectedLayer: {},
 };
 

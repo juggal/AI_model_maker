@@ -29,33 +29,51 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function LayerTuning({ selectedLayer, saveLayerSettings }) {
+function LayerTuning({
+  selectedLayer,
+  saveLayerSettings,
+  selectedLayerSettings,
+}) {
   const classes = useStyles();
 
   const [currentSetting, setSetting] = useState("");
   const [fieldValues, setFieldValues] = useState({});
 
+  // update selected layer field values to state
   const handleFieldValues = (value, type) => {
     setFieldValues((prevState) => ({ ...prevState, [type]: value }));
   };
 
+  // save the selected layer field values to store
   const save = () => {
-    // saveLayerSettings(selectedLayer.layer_id, fieldValues);
-    console.log(fieldValues);
+    saveLayerSettings(selectedLayer.layer_id, fieldValues);
   };
 
-  useEffect(() => {
-    setFieldValues({});
-    setSetting(settingType(selectedLayer.layer_name));
-  }, [selectedLayer]);
+  // fetch selected layer settings from store if exists
+  const settings = selectedLayerSettings.filter(
+    (layer) => layer.layer_id === selectedLayer.layer_id
+  );
 
+  // get layer component based on selected layer
   const settingType = (layerName) => {
     switch (layerName) {
       case "Dense":
-        return <DenseLayer onChange={handleFieldValues} save={save} />;
+        return (
+          <DenseLayer
+            onChange={handleFieldValues}
+            save={save}
+            settings={settings}
+          />
+        );
 
       case "Dropout":
-        return <DropoutLayer onChange={handleFieldValues} save={save} />;
+        return (
+          <DropoutLayer
+            onChange={handleFieldValues}
+            save={save}
+            settings={settings}
+          />
+        );
 
       case "Flatten":
         return (
@@ -65,14 +83,30 @@ function LayerTuning({ selectedLayer, saveLayerSettings }) {
         );
 
       case "Convolution":
-        return <ConvolutionLayer onChange={handleFieldValues} save={save} />;
+        return (
+          <ConvolutionLayer
+            onChange={handleFieldValues}
+            save={save}
+            settings={settings}
+          />
+        );
 
       case "MaxPool":
-        return <MaxPoolLayer onChange={handleFieldValues} save={save} />;
+        return (
+          <MaxPoolLayer
+            onChange={handleFieldValues}
+            save={save}
+            settings={settings}
+          />
+        );
       default:
         return null;
     }
   };
+
+  useEffect(() => {
+    setSetting(settingType(selectedLayer.layer_name));
+  }, [selectedLayer]);
 
   return (
     <BaseMenu heading="Layer Tuning">
@@ -95,6 +129,7 @@ function LayerTuning({ selectedLayer, saveLayerSettings }) {
 const mapStateToProps = (state) => {
   return {
     selectedLayer: state.layerSettings.selectedLayer,
+    selectedLayerSettings: state.layerSettings.settings,
   };
 };
 
