@@ -7,7 +7,7 @@ export default function Shape({ label, type, onChange, settings }) {
       <TextField
         variant="outlined"
         label={label}
-        value={settings || ""}
+        value={settings}
         onChange={(e) => onChange(e.target.value, type)}
         required
       />

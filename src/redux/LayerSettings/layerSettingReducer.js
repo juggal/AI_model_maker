@@ -15,7 +15,7 @@ const layerSettingsReducer = (state = initialState, action) => {
     case SAVE_LAYER_SETTINGS:
       return {
         ...state,
-        layerSettings: state.layerSettings.concat(action.payload),
+        settings: state.settings.concat(action.payload),
       };
     default:
       return state;

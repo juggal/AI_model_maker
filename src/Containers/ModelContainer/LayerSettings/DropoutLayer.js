@@ -13,7 +13,7 @@ export default function DropoutLayer({ onChange, save, settings }) {
         steps={0.1}
         type="rate"
         onChange={onChange}
-        settings={settings.rate}
+        setting={settings.rate}
       />
       <SaveButton save={save} />
     </div>

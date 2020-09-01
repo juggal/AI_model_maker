@@ -36,8 +36,10 @@ function LayerTuning({
 }) {
   const classes = useStyles();
 
-  const [currentSetting, setSetting] = useState("");
+  const [settings, setSettings] = useState({});
+  const [currentLayer, setLayer] = useState("");
   const [fieldValues, setFieldValues] = useState({});
+  const [saving, setSaving] = useState(false);
 
   // update selected layer field values to state
   const handleFieldValues = (value, type) => {
@@ -46,13 +48,25 @@ function LayerTuning({
 
   // save the selected layer field values to store
   const save = () => {
-    saveLayerSettings(selectedLayer.layer_id, fieldValues);
+    setSaving(true);
   };
 
-  // fetch selected layer settings from store if exists
-  const settings = selectedLayerSettings.filter(
-    (layer) => layer.layer_id === selectedLayer.layer_id
-  );
+  // routines to execute on every layer change
+  const handleLayerChange = () => {
+    // fetch selected layer settings from store if exists
+    const settings = selectedLayerSettings.filter(
+      (layer) => layer.layer_id === selectedLayer.layer_id
+    );
+
+    // set settings state
+    setSettings(settings);
+
+    //set current layer to new layer
+    setLayer(settingType(selectedLayer.layer_name));
+
+    // reset the field values state
+    setFieldValues({});
+  };
 
   // get layer component based on selected layer
   const settingType = (layerName) => {
@@ -105,8 +119,13 @@ function LayerTuning({
   };
 
   useEffect(() => {
-    setSetting(settingType(selectedLayer.layer_name));
-  }, [selectedLayer]);
+    if (saving) {
+      saveLayerSettings(selectedLayer.layer_id, fieldValues);
+      setSaving(false);
+      return;
+    }
+    handleLayerChange();
+  }, [selectedLayer, saving]);
 
   return (
     <BaseMenu heading="Layer Tuning">
@@ -120,7 +139,7 @@ function LayerTuning({
         >
           {selectedLayer.layer_name}
         </Typography>
-        {currentSetting}
+        {currentLayer}
       </form>
     </BaseMenu>
   );

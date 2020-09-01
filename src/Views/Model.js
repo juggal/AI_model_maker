@@ -1,6 +1,5 @@
-import React, { Component } from "react";
+import React from "react";
 import { Grid } from "@material-ui/core";
-import {} from "@material-ui/core/styles";
 
 import { ModelContainers } from "../Containers/";
 const { Layers, LayerTuning, Architecture } = ModelContainers;

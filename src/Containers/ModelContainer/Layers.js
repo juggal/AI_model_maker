@@ -16,11 +16,7 @@ import { connect } from "react-redux";
 // unique id generator
 import uniqid from "uniqid";
 
-// add style object to component
-const useStyles = makeStyles((theme) => ({}));
-
 function Layers({ addLayer }) {
-  const classes = useStyles();
   return (
     <BaseMenu heading="Layers" list>
       {["Dense", "Dropout", "Flatten", "Convolution", "MaxPool"].map(

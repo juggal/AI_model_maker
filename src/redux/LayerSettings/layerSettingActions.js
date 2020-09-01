@@ -14,6 +14,7 @@ export const saveLayerSettings = (layer_id, settings) => {
   return {
     type: SAVE_LAYER_SETTINGS,
     payload: {
+      layer_id,
       ...settings,
     },
   };
