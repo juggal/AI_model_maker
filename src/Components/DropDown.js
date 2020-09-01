@@ -35,6 +35,7 @@ const paddings = [
 
 export default function DropDown({ label, type, onChange }) {
   const [listSelect, setListSelect] = useState("");
+  const [loaded, setLoaded] = useState(false);
 
   const handleListSelect = (event) => {
     setListSelect(event.target.value);
@@ -49,7 +50,10 @@ export default function DropDown({ label, type, onChange }) {
   };
 
   useEffect(() => {
-    onChange(listSelect, type);
+    if (loaded) {
+      onChange(listSelect, type);
+    }
+    setLoaded(true);
   }, [listSelect]);
 
   return (

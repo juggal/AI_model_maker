@@ -12,12 +12,15 @@ const useStyles = makeStyles((theme) => ({
 export default function Size({ label, min, max, steps, type, onChange }) {
   const classes = useStyles();
   const [size, setSize] = useState(min);
+  const [loaded, setLoaded] = useState(false);
   const handleSizeChange = (event, newValue) => {
     setSize(newValue);
   };
 
   const handleInputChange = (event) => {
-    setSize(event.target.value === "" ? "" : Number(event.target.value));
+    const newValue =
+      event.target.value === "" ? "" : Number(event.target.value);
+    setSize(newValue);
   };
 
   const handleBlur = () => {
@@ -29,8 +32,12 @@ export default function Size({ label, min, max, steps, type, onChange }) {
   };
 
   useEffect(() => {
-    onChange(size, type);
+    if (loaded) {
+      onChange(size, type);
+    }
+    setLoaded(true);
   }, [size]);
+
   return (
     <div>
       <Typography variant="caption" gutterBottom>
