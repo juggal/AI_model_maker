@@ -4,7 +4,12 @@ import Shape from "../../../Components/Shape";
 import DropDown from "../../../Components/DropDown";
 import SaveButton from "../../../Components/SaveButton";
 
-export default function ConvolutionLayer({ onChange, save, settings }) {
+export default function ConvolutionLayer({
+  onChange,
+  save,
+  settings,
+  isFirst,
+}) {
   return (
     <div>
       <Size
@@ -21,6 +26,7 @@ export default function ConvolutionLayer({ onChange, save, settings }) {
         type="input_shape"
         onChange={onChange}
         settings={settings.input_shape}
+        isFirst={isFirst}
       />
       <Shape
         label="Kernal Size"

@@ -1,7 +1,7 @@
 import React from "react";
 import { TextField } from "@material-ui/core";
 
-export default function Shape({ label, type, onChange, settings }) {
+export default function Shape({ label, type, onChange, settings, isFirst }) {
   return (
     <div>
       <TextField
@@ -9,6 +9,7 @@ export default function Shape({ label, type, onChange, settings }) {
         label={label}
         value={settings}
         onChange={(e) => onChange(e.target.value, type)}
+        disabled={type === "input_shape" && !isFirst}
         required
       />
     </div>

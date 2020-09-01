@@ -16,8 +16,7 @@ import { connect } from "react-redux";
 // unique id generator
 import uniqid from "uniqid";
 
-function Layers({ addLayer }) {
-  const [isFirst, setFirst] = useState(true);
+function Layers({ length, addLayer }) {
   return (
     <BaseMenu heading="Layers" list>
       {["Dense", "Dropout", "Flatten", "Convolution", "MaxPool"].map(
@@ -30,10 +29,9 @@ function Layers({ addLayer }) {
                   color="primary"
                   edge="end"
                   aria-label="add layer"
-                  onClick={() => {
-                    addLayer(uniqid("layer_"), text, isFirst);
-                    setFirst(false);
-                  }}
+                  onClick={() =>
+                    addLayer(uniqid("layer_"), text, length < 1 ? true : false)
+                  }
                 >
                   <AddRounded />
                 </IconButton>
@@ -47,6 +45,12 @@ function Layers({ addLayer }) {
   );
 }
 
+const mapStateToProps = (state) => {
+  return {
+    length: state.architecture.layers.length,
+  };
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
     addLayer: (layer_id, layer_type, isFirst) =>
@@ -54,4 +58,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(Layers);
+export default connect(mapStateToProps, mapDispatchToProps)(Layers);
