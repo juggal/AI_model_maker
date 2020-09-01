@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -29,17 +29,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function LayerTuning({
-  selectedLayer,
-  saveLayerSettings,
-  selectedLayerSettings,
-}) {
+function LayerTuning({ selectedLayer, saveLayerSettings, layerSettings }) {
   const classes = useStyles();
 
-  const [settings, setSettings] = useState({});
   const [currentLayer, setLayer] = useState("");
   const [fieldValues, setFieldValues] = useState({});
-  const [saving, setSaving] = useState(false);
+  const stateRef = useRef();
+  stateRef.current = fieldValues;
 
   // update selected layer field values to state
   const handleFieldValues = (value, type) => {
@@ -48,28 +44,29 @@ function LayerTuning({
 
   // save the selected layer field values to store
   const save = () => {
-    setSaving(true);
+    saveLayerSettings(selectedLayer.layer_id, stateRef.current);
   };
 
   // routines to execute on every layer change
   const handleLayerChange = () => {
+    // reset states
+    setFieldValues({});
+
     // fetch selected layer settings from store if exists
-    const settings = selectedLayerSettings.filter(
+    const settings = layerSettings.filter(
       (layer) => layer.layer_id === selectedLayer.layer_id
     );
 
-    // set settings state
-    setSettings(settings);
-
-    //set current layer to new layer
-    setLayer(settingType(selectedLayer.layer_name));
-
-    // reset the field values state
-    setFieldValues({});
+    // set currentLayer with fetched settings
+    if (settings.length > 0) {
+      setLayer(settingType(selectedLayer.layer_name, settings[0]));
+    } else {
+      setLayer(settingType(selectedLayer.layer_name, settings));
+    }
   };
 
   // get layer component based on selected layer
-  const settingType = (layerName) => {
+  const settingType = (layerName, settings) => {
     switch (layerName) {
       case "Dense":
         return (
@@ -77,6 +74,8 @@ function LayerTuning({
             onChange={handleFieldValues}
             save={save}
             settings={settings}
+            key={selectedLayer.layer_id}
+            isFirst={selectedLayer.first_layer}
           />
         );
 
@@ -86,6 +85,7 @@ function LayerTuning({
             onChange={handleFieldValues}
             save={save}
             settings={settings}
+            key={selectedLayer.layer_id}
           />
         );
 
@@ -102,6 +102,8 @@ function LayerTuning({
             onChange={handleFieldValues}
             save={save}
             settings={settings}
+            key={selectedLayer.layer_id}
+            isFirst={selectedLayer.first_layer}
           />
         );
 
@@ -111,6 +113,7 @@ function LayerTuning({
             onChange={handleFieldValues}
             save={save}
             settings={settings}
+            key={selectedLayer.layer_id}
           />
         );
       default:
@@ -119,13 +122,8 @@ function LayerTuning({
   };
 
   useEffect(() => {
-    if (saving) {
-      saveLayerSettings(selectedLayer.layer_id, fieldValues);
-      setSaving(false);
-      return;
-    }
     handleLayerChange();
-  }, [selectedLayer, saving]);
+  }, [selectedLayer]);
 
   return (
     <BaseMenu heading="Layer Tuning">
@@ -148,7 +146,7 @@ function LayerTuning({
 const mapStateToProps = (state) => {
   return {
     selectedLayer: state.layerSettings.selectedLayer,
-    selectedLayerSettings: state.layerSettings.settings,
+    layerSettings: state.layerSettings.settings,
   };
 };
 
