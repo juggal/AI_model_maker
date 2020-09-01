@@ -1,4 +1,8 @@
-import { SELECTED_LAYER, SAVE_LAYER_SETTINGS } from "./layerSettingTypes";
+import {
+  SELECTED_LAYER,
+  SAVE_LAYER_SETTINGS,
+  UPDATE_LAYER_SETTINGS,
+} from "./layerSettingTypes";
 
 export const setSelectedLayer = (layer_id, layer_name, first_layer) => {
   return {
@@ -14,6 +18,16 @@ export const setSelectedLayer = (layer_id, layer_name, first_layer) => {
 export const saveLayerSettings = (layer_id, settings) => {
   return {
     type: SAVE_LAYER_SETTINGS,
+    payload: {
+      layer_id,
+      ...settings,
+    },
+  };
+};
+
+export const updateLayerSettings = (layer_id, settings) => {
+  return {
+    type: UPDATE_LAYER_SETTINGS,
     payload: {
       layer_id,
       ...settings,
