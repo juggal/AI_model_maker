@@ -29,12 +29,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function LayerTuning({ selectedLayer, saveLayerSettings, layerSettings }) {
+function LayerTuning({
+  selectedLayer,
+  saveLayerSettings,
+  updateLayerSettings,
+  layerSettings,
+}) {
   const classes = useStyles();
 
   const [currentLayer, setLayer] = useState("");
   const [fieldValues, setFieldValues] = useState({});
   const stateRef = useRef();
+
   stateRef.current = fieldValues;
 
   // update selected layer field values to state
