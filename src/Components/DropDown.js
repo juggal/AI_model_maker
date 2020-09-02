@@ -33,6 +33,61 @@ const paddings = [
   },
 ];
 
+const metrics = [
+  {
+    value: "Accuracy",
+    label: "Accuracy",
+  },
+  {
+    value: "MeanSquaredError",
+    label: "MeanSquaredError",
+  },
+  {
+    value: "TruePositives",
+    label: "TruePositives",
+  },
+  {
+    value: "TrueNegatives",
+    label: "TrueNegatives",
+  },
+  {
+    value: "FalsePositives",
+    label: "FalsePositives",
+  },
+  {
+    value: "FalseNegatives",
+    label: "FalseNegatives",
+  },
+];
+const optimizers = [
+  {
+    value: "adam",
+    label: "Adam",
+  },
+  {
+    value: "sgd",
+    label: "SGD",
+  },
+];
+const losses = [
+  {
+    value: "binary_crossentropy",
+    label: "binary_crossentropy",
+  },
+  {
+    value: "categorical_crossentropy",
+    label: "categorical_crossentropy",
+  },
+  {
+    value: "sparse_crossentropy",
+    label: "sparse_crossentropy",
+  },
+  {
+    value: "mean_squared_error",
+    label: "mean_squared_error",
+  },
+];
+
 export default function DropDown({ label, type, onChange, settings }) {
   const [listSelect, setListSelect] = useState(settings || "");
   const [loaded, setLoaded] = useState(false);
@@ -41,11 +96,18 @@ export default function DropDown({ label, type, onChange, settings }) {
     setListSelect(event.target.value);
   };
 
-  const list = () => {
-    if (type === "activation") {
-      return activations;
-    } else if (type === "padding") {
-      return paddings;
+  const list = (type) => {
+    switch (type) {
+      case "activation":
+        return activations;
+      case "padding":
+        return paddings;
+      case "optimizer":
+        return optimizers;
+      case "loss":
+        return losses;
+      case "metrics":
+        return metrics;
     }
   };
 
@@ -66,7 +128,7 @@ export default function DropDown({ label, type, onChange, settings }) {
         onChange={handleListSelect}
         required
       >
-        {list().map((option) => (
+        {list(type).map((option) => (
           <MenuItem key={option.value} value={option.value}>
             {option.label}
           </MenuItem>
