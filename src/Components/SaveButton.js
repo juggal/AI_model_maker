@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button, Snackbar } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import { Alert } from "@material-ui/lab";
 
 import { connect } from "react-redux";
 
@@ -17,7 +18,7 @@ function SaveButton({ layers, selectedLayerId, save }) {
   const classes = useStyles();
 
   const [open, setOpen] = useState(false);
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState(false);
 
   const handleClick = (layers, selectedLayerId) => {
     // search for if current selected layer exists
@@ -28,11 +29,11 @@ function SaveButton({ layers, selectedLayerId, save }) {
       }
     });
     // set message based on if layer exists or not
-    if (index === -1) {
-      setMessage("Save Failed");
-    } else {
+    if (index !== -1) {
+      setMessage(true);
       save();
-      setMessage("Save successfully");
+    } else {
+      setMessage(false);
     }
     // open the snackbar
     setOpen(true);
@@ -56,10 +57,13 @@ function SaveButton({ layers, selectedLayerId, save }) {
         anchorOrigin={{ vertical: "Top", horizontal: "Right" }}
         open={open}
         onClose={handleClose}
-        message={message}
         key={{ vertical: "Top", horizontal: "Right" }}
-        autoHideDuration={3000}
-      />
+        autoHideDuration={1000}
+      >
+        <Alert variant="filled" severity={message ? "success" : "error"}>
+          {message ? "Saved Successfully" : "Save failed"}
+        </Alert>
+      </Snackbar>
     </div>
   );
 }
