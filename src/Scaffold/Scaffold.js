@@ -19,12 +19,15 @@ import {
   BuildRounded,
   ToysRounded,
   VerticalAlignBottomRounded,
+  GetAppRounded,
 } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
+import { purple } from "@material-ui/core/colors";
 import clsx from "clsx";
 
 // import views
 import Model from "../Views/Model";
+import { connect } from "react-redux";
 
 // width of drawer component
 const drawerWidth = 160;
@@ -51,6 +54,16 @@ const useStyles = makeStyles((theme) => ({
   },
   menuButton: {
     marginRight: 36,
+  },
+  title: {
+    flexGrow: 1,
+  },
+  downloadButton: {
+    color: theme.palette.getContrastText(purple[500]),
+    backgroundColor: purple[500],
+    "&:hover": {
+      backgroundColor: purple[700],
+    },
   },
   hide: {
     display: "none",
@@ -88,7 +101,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Scaffold() {
+function Scaffold({ config }) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
 
@@ -105,6 +118,10 @@ export default function Scaffold() {
 
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const handleButtonClick = () => {
+    console.log(JSON.stringify(config));
   };
 
   return (
@@ -128,9 +145,19 @@ export default function Scaffold() {
           >
             <MenuRounded />
           </IconButton>
-          <Typography variant="h6" noWrap>
+          <Typography variant="h6" noWrap className={classes.title}>
             AIModelMaker
           </Typography>
+          <IconButton
+            href={`data:text/json;charset=utf-8,${encodeURIComponent(
+              JSON.stringify(config)
+            )}`}
+            download="filename.json"
+            className={classes.downloadButton}
+            onClick={handleButtonClick}
+          >
+            <GetAppRounded />
+          </IconButton>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -169,3 +196,15 @@ export default function Scaffold() {
     </div>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    config: {
+      architecture: state.architecture,
+      layerSettings: state.layerSettings.settings,
+      compileSettings: state.compileSettings,
+    },
+  };
+};
+
+export default connect(mapStateToProps)(Scaffold);
