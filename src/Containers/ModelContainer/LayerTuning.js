@@ -8,7 +8,7 @@ import DropoutLayer from "./LayerSettings/DropoutLayer";
 import ConvolutionLayer from "./LayerSettings/CovolutionLayer";
 import MaxPoolLayer from "./LayerSettings/MaxPoolLayer";
 
-import { saveLayerSettings } from "../../redux";
+import { saveLayerSettings, updateLayerSettings } from "../../redux";
 import { connect } from "react-redux";
 
 // add style object to the component
@@ -38,26 +38,26 @@ function LayerTuning({
   const classes = useStyles();
 
   const [currentLayer, setLayer] = useState("");
-  const [fieldValues, setFieldValues] = useState({});
-  const stateRef = useRef();
-
-  stateRef.current = fieldValues;
+  const fieldValues = useRef({});
+  const update = useRef(false);
 
   // update selected layer field values to state
   const handleFieldValues = (value, type) => {
-    setFieldValues((prevState) => ({ ...prevState, [type]: value }));
+    fieldValues.current = { ...fieldValues.current, [type]: value };
   };
 
-  // save the selected layer field values to store
+  // save or update the selected layer field values to store
   const save = () => {
-    saveLayerSettings(selectedLayer.layer_id, stateRef.current);
+    if (update.current) {
+      updateLayerSettings(selectedLayer.layer_id, fieldValues.current);
+    } else {
+      saveLayerSettings(selectedLayer.layer_id, fieldValues.current);
+      update.current = true;
+    }
   };
 
   // routines to execute on every layer change
   const handleLayerChange = () => {
-    // reset states
-    setFieldValues({});
-
     // fetch selected layer settings from store if exists
     const settings = layerSettings.filter(
       (layer) => layer.layer_id === selectedLayer.layer_id
@@ -66,6 +66,7 @@ function LayerTuning({
     // set currentLayer with fetched settings
     if (settings.length > 0) {
       setLayer(settingType(selectedLayer.layer_name, settings[0]));
+      update.current = true;
     } else {
       setLayer(settingType(selectedLayer.layer_name, settings));
     }
@@ -128,8 +129,15 @@ function LayerTuning({
   };
 
   useEffect(() => {
+    console.log("rendered");
     handleLayerChange();
-  }, [selectedLayer]);
+    return () => {
+      // reset fieldValues
+      fieldValues.current = {};
+      // reset update state
+      update.current = false;
+    };
+  }, [selectedLayer.layer_id]);
 
   return (
     <BaseMenu heading="Layer Tuning">
@@ -160,6 +168,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     saveLayerSettings: (layer_id, settings) =>
       dispatch(saveLayerSettings(layer_id, settings)),
+    updateLayerSettings: (layer_id, settings) =>
+      dispatch(updateLayerSettings(layer_id, settings)),
   };
 };
 

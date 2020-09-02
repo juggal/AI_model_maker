@@ -22,17 +22,17 @@ const layerSettingsReducer = (state = initialState, action) => {
         settings: state.settings.concat(action.payload),
       };
     case UPDATE_LAYER_SETTINGS:
+      const updatedSettings = state.settings.map((setting) => {
+        if (setting.layer_id === action.payload.layer_id) {
+          return action.payload;
+        }
+        return setting;
+      });
       return {
         ...state,
-        settings: Object.assign(
-          state.settings[
-            state.settings.findIndex(
-              (setting) => setting.layer_id === action.payload.layer_id
-            )
-          ],
-          action.payload
-        ),
+        settings: updatedSettings,
       };
+
     default:
       return state;
   }
