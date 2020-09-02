@@ -9,7 +9,7 @@ const initialState = {
   selectedLayer: {},
 };
 
-const layerSettingsReducer = (state = initialState, action) => {
+const layerSettingReducer = (state = initialState, action) => {
   switch (action.type) {
     case SELECTED_LAYER:
       return {
@@ -38,4 +38,4 @@ const layerSettingsReducer = (state = initialState, action) => {
   }
 };
 
-export default layerSettingsReducer;
+export default layerSettingReducer;
